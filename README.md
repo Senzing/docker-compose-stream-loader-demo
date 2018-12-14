@@ -2,6 +2,10 @@
 
 ## Overview
 
+<img src="doc/img-architecture/architecture.png" width="90%>
+
+------
+
 ![Image of architecture](doc/img-architecture/architecture.png)
 
 This docker formation brings up the following docker containers:
