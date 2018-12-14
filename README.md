@@ -2,9 +2,7 @@
 
 ## Overview
 
-<img src="doc/img-architecture/architecture.png" width="90%>
-
-------
+The following diagram shows the relationship of the docker containers in this docker composition.
 
 ![Image of architecture](doc/img-architecture/architecture.png)
 
