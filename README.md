@@ -2,6 +2,10 @@
 
 ## Overview
 
+The following diagram shows the relationship of the docker containers in this docker composition.
+
+![Image of architecture](doc/img-architecture/architecture.png)
+
 This docker formation brings up the following docker containers:
 
 1. *[bitnami/zookeeper](https://github.com/bitnami/bitnami-docker-zookeeper)*
