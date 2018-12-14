@@ -2,6 +2,8 @@
 
 ## Overview
 
+![Image of architecture](doc/img-architecture/architecture.png)
+
 This docker formation brings up the following docker containers:
 
 1. *[bitnami/zookeeper](https://github.com/bitnami/bitnami-docker-zookeeper)*
