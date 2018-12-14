@@ -1,4 +1,4 @@
-# docker-compose-stream-loader-demo
+# docker-compose-stream-loader-kafka-demo
 
 ## Overview
 
@@ -24,7 +24,7 @@ This docker formation brings up the following docker containers:
 
     ```console
     export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=docker-compose-stream-loader-demo
+    export GIT_REPOSITORY=docker-compose-stream-loader-kafka-demo
     ```
 
 1. Synthesize environment variables.
@@ -111,7 +111,7 @@ sudo docker-compose --version
     export MYSQL_ROOT_PASSWORD=root
     export MYSQL_USERNAME=g2
     export MYSQL_PASSWORD=g2
-    export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-demo
+    export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo
 
     sudo docker-compose --file docker-compose-init.yaml up
     ```
@@ -121,7 +121,7 @@ sudo docker-compose --version
    You can log in with Username "root" and the Password specified in `MYSQL_ROOT_PASSWORD`.
 
 1. The database storage will persist on the local system at ${MYSQL_STORAGE}.
-   The default database storage path is `/storage/docker/senzing/docker-compose-stream-loader-demo`.
+   The default database storage path is `/storage/docker/senzing/docker-compose-stream-loader-kafka-demo`.
 
 1. When the following is seen in the log:
 
@@ -149,7 +149,7 @@ sudo docker-compose --version
     export MYSQL_ROOT_PASSWORD=root
     export MYSQL_USERNAME=g2
     export MYSQL_PASSWORD=g2
-    export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-demo
+    export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo
 
     sudo docker-compose --file docker-compose-kafka.yaml up
     ```
