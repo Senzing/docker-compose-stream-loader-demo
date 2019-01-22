@@ -102,13 +102,10 @@ services:
     environment:
 #     See https://github.com/Senzing/stream-loader#configuration
       SENZING_SUBCOMMAND: kafka
-      SENZING_DATABASE_URL: "mysql://${MYSQL_USERNAME:-g2}:${MYSQL_PASSWORD:-g2}@senzing-mysql:3306/${MYSQL_DATABASE:-G2}"
       SENZING_DATA_SOURCE: PEOPLE
       SENZING_ENTITY_TYPE: PEOPLE
-      SENZING_INPUT_WORKERS: 2
       SENZING_KAFKA_BOOTSTRAP_SERVER: senzing-kafka:9092
       SENZING_KAFKA_TOPIC: "senzing-kafka-topic"
-      SENZING_MONITORING_PERIOD: 60
       LC_CTYPE: en_US.utf8
     networks:
       - backend
@@ -124,13 +121,10 @@ services:
     environment:
 #     See https://github.com/Senzing/stream-loader#configuration
       SENZING_SUBCOMMAND: kafka
-      SENZING_DATABASE_URL: "mysql://${MYSQL_USERNAME:-g2}:${MYSQL_PASSWORD:-g2}@senzing-mysql:3306/${MYSQL_DATABASE:-G2}"
       SENZING_DATA_SOURCE: PEOPLE
       SENZING_ENTITY_TYPE: PEOPLE
-      SENZING_INPUT_WORKERS: 2
       SENZING_KAFKA_BOOTSTRAP_SERVER: senzing-kafka:9092
       SENZING_KAFKA_TOPIC: "senzing-kafka-topic"
-      SENZING_MONITORING_PERIOD: 60
       LC_CTYPE: en_US.utf8
     networks:
       - backend
@@ -146,13 +140,10 @@ services:
     environment:
 #     See https://github.com/Senzing/stream-loader#configuration
       SENZING_SUBCOMMAND: kafka
-      SENZING_DATABASE_URL: "mysql://${MYSQL_USERNAME:-g2}:${MYSQL_PASSWORD:-g2}@senzing-mysql:3306/${MYSQL_DATABASE:-G2}"
       SENZING_DATA_SOURCE: PEOPLE
       SENZING_ENTITY_TYPE: PEOPLE
-      SENZING_INPUT_WORKERS: 2
       SENZING_KAFKA_BOOTSTRAP_SERVER: senzing-kafka:9092
       SENZING_KAFKA_TOPIC: "senzing-kafka-topic"
-      SENZING_MONITORING_PERIOD: 60
       LC_CTYPE: en_US.utf8
     networks:
       - backend
