@@ -101,7 +101,7 @@ sudo docker-compose --version
     cd ${GIT_REPOSITORY_DIR}
 
     export SENZING_DIR=/opt/senzing
-    sudo docker-compose --file docker-compose-kafka-sqlite.yaml up    
+    sudo docker-compose --file docker-compose-kafka-sqlite.yaml up
     ```
 
 1. Wait for the following message in the log.
@@ -114,23 +114,20 @@ sudo docker-compose --version
     http://0.0.0.0/0.0.0.0:8080/
     ```
 
-1. Test Senzing REST API server.  Note: port 8888 on the localhost has been mapped to port 8080 in the docker container.  Example:
+1. Test Senzing REST API server.  *Note:* port 8888 on the localhost has been mapped to port 8080 in the docker-compose file. Example:
 
     ```console
-    curl -X GET http://localhost:8888/heartbeat
-    ```
+    export SENZING_API_SERVICE=http://localhost:8888
 
-    ```console
-    curl -X GET http://localhost:8888/license
-    ```
-
-    ```console
-    curl -X GET http://localhost:8888/entities/1
+    curl -X GET ${SENZING_API_SERVICE}/heartbeat
+    curl -X GET ${SENZING_API_SERVICE}/license
+    curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
 
 ### Run docker container alone
 
-
+1. To run [senzing/rest-api-server-java](https://github.com/Senzing/rest-api-server-java) without docker-compose,
+   see [Run docker image](https://github.com/Senzing/rest-api-server-java#run-docker-image).
 
 ## Cleanup
 
@@ -141,7 +138,7 @@ In a separate (or reusable) terminal window:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker-compose --file docker-compose-kafka-sqlite.yaml down    
+    sudo docker-compose --file docker-compose-kafka-sqlite.yaml down
     ```
 
 1. Delete SENZING_DIR.
