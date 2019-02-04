@@ -38,6 +38,7 @@ services:
       SENZING_KAFKA_BOOTSTRAP_SERVER: senzing-kafka:9092
       SENZING_KAFKA_TOPIC: "senzing-kafka-topic"
       SENZING_INPUT_URL: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
+      SENZING_RECORD_MAX: 10000
       SENZING_RECORD_MONITOR: 100
       SENZING_RECORDS_PER_SECOND: 10
     networks:
