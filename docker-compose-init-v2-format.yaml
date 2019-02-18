@@ -1,0 +1,65 @@
+version: '2'
+services:
+
+  mysql:
+    image: mysql:5.7
+    container_name: senzing-mysql
+    environment:
+#     See https://hub.docker.com/_/mysql/ "Environment Variables"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: G2
+      MYSQL_USER: g2
+      MYSQL_PASSWORD: g2
+    networks:
+      - backend
+    ports:
+      - 3306:3306
+    volumes:
+      - /storage/docker/senzing/docker-compose-mysql-demo:/var/lib/mysql
+
+  mysqlinit:
+    image: senzing/mysql-init
+    container_name: senzing-mysql-init
+    environment:
+      SENZING_SENTINEL_FILE: /opt/senzing/mysql-init.sentinel
+    command:
+      - --user=g2
+      - --password=g2
+      - --host=mysql
+      - --database=G2
+      - --execute="source /opt/senzing/g2/data/g2core-schema-mysql-create.sql"
+    networks:
+      - backend
+    volumes:
+      - /opt/senzing:/opt/senzing
+    depends_on:
+      - mysql
+    restart: on-failure
+
+  senzinginit:
+    image: senzing/python-base
+    container_name: senzing-python-init
+    environment:
+      SENZING_DATABASE_URL: "mysql://g2:g2@senzing-mysql:3306/G2"
+    networks:
+      - backend
+    volumes:
+      - /opt/senzing:/opt/senzing
+    restart: on-failure
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: senzing-phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    networks:
+      - backend
+    ports:
+      - 8080:80
+    restart: always
+    depends_on:
+      - mysql
+
+networks:
+  backend:
