@@ -19,6 +19,21 @@ This docker formation brings up the following docker containers:
 
 ### Contents
 
+1. [Preparation](#preparation)
+    1. [Set environment variables](#set-environment-variables)
+    1. [Clone repository](#clone-repository)
+    1. [Create SENZING_DIR](#create-senzing_dir)
+    1. [Prerequisite software](#prerequisite-software)
+1. [Using docker-compose](#using-docker-compose)
+    1. [Build docker images](#build-docker-images)
+    1. [Configuration](#configuration)
+    1. [Run docker formation to initialize database](#run-docker-formation-to-initialize-database)
+    1. [Run docker formation to read from Kafka](#run-docker-formation-to-read-from-Kafka)
+    
+## Expectations
+
+- **Space:** Requires 2GB of free disk space. 
+
 ## Preparation
 
 ### Set environment variables
@@ -54,7 +69,7 @@ This docker formation brings up the following docker containers:
 If you do not already have an `/opt/senzing` directory on your local system, visit
 [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
-### Software
+### Prerequisite software
 
 The following software programs need to be installed.
 
