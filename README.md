@@ -16,9 +16,14 @@ This docker formation brings up the following docker containers:
 1. *[senzing/mysql-init](https://github.com/Senzing/docker-mysql-init)*
 1. *[senzing/python-base](https://github.com/Senzing/docker-python-base)*
 1. *[senzing/stream-loader](https://github.com/Senzing/stream-loader)*
+1. *[senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server)*
 
 ### Contents
 
+1. [Expectations](#expectations)
+    1. [Space](#space)
+    1. [Time](#time)
+    1. [Background knowledge](#background-knowledge)
 1. [Preparation](#preparation)
     1. [Set environment variables](#set-environment-variables)
     1. [Clone repository](#clone-repository)
@@ -28,11 +33,25 @@ This docker formation brings up the following docker containers:
     1. [Build docker images](#build-docker-images)
     1. [Configuration](#configuration)
     1. [Run docker formation to initialize database](#run-docker-formation-to-initialize-database)
-    1. [Run docker formation to read from Kafka](#run-docker-formation-to-read-from-Kafka)
-    
+    1. [Run docker formation to read from Kafka](#run-docker-formation-to-read-from-kafka)
+1. [Cleanup](#cleanup)
+
 ## Expectations
 
-- **Space:** Requires 2GB of free disk space. 
+### Space
+
+This repository and demonstration require 7 GB free disk space.
+
+### Time
+
+Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+
+### Background knowledge
+
+This repository assumes a working knowledge of:
+
+1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+1. [Docker-compose](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker-compose.md)
 
 ## Preparation
 
@@ -75,16 +94,22 @@ The following software programs need to be installed.
 
 #### docker
 
-```console
-sudo docker --version
-sudo docker run hello-world
-```
+1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
+1. Test
+
+    ```console
+    sudo docker --version
+    sudo docker run hello-world
+    ```
 
 #### docker-compose
 
-```console
-sudo docker-compose --version
-```
+1. [Install docker-compose](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-compose.md)
+1. Test
+
+    ```console
+    sudo docker-compose --version
+    ```
 
 ## Using docker-compose
 
@@ -98,6 +123,8 @@ sudo docker-compose --version
     sudo docker build --tag senzing/mysql-init          https://github.com/senzing/docker-mysql-init.git
     sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
     ```
+
+1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
 
 ### Configuration
 
@@ -178,6 +205,29 @@ sudo docker-compose --version
    The records received from Kafka can be viewed in the following Senzing tables:
     1. G2 > DSRC_RECORD
     1. G2 > OBS_ENT
+
+### Test Docker container
+
+1. Wait for the following message in the terminal showing docker log.
+
+    ```console
+    senzing-api-server | Started Senzing REST API Server on port 8080.
+    senzing-api-server |
+    senzing-api-server | Server running at:
+    senzing-api-server | http://0.0.0.0:8080/
+    ```
+
+1. Test Senzing REST API server.
+   *Note:* port 8889 on the localhost has been mapped to port 8080 in the docker container.
+   See `WEBAPP_PORT` definition.
+   Example:
+
+    ```console
+    export SENZING_API_SERVICE=http://localhost:8889
+
+    curl -X GET ${SENZING_API_SERVICE}/heartbeat
+    curl -X GET ${SENZING_API_SERVICE}/license
+    ```
 
 ## Cleanup
 
