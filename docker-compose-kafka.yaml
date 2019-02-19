@@ -154,5 +154,18 @@ services:
       - mysqlinit
     restart: on-failure
 
+  api:
+    image: senzing/senzing-api-server
+    container_name: senzing-api-server
+    networks:
+      - backend
+    ports:
+      - 8889:8080
+    volumes:
+      - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
+    restart: always
+    depends_on:
+      - mysql
+
 networks:
   backend:

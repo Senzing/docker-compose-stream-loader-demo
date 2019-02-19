@@ -29,12 +29,23 @@ This docker formation brings up the following docker containers:
     1. [Configuration](#configuration)
     1. [Run docker formation to initialize database](#run-docker-formation-to-initialize-database)
     1. [Run docker formation to read from Kafka](#run-docker-formation-to-read-from-Kafka)
-    
+
 ## Expectations
 
-- **Space:** Requires 2GB of free disk space. 
+### Space
 
-## Preparation
+This repository and demonstration require 7 GB free disk space.
+
+### Time
+
+Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+
+### Background knowledge
+
+This repository assumes a working knowledge of:
+
+1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+1. [Docker-compose](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker-compose.md)
 
 ### Set environment variables
 
@@ -75,16 +86,22 @@ The following software programs need to be installed.
 
 #### docker
 
-```console
-sudo docker --version
-sudo docker run hello-world
-```
+1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
+1. Test
+
+    ```console
+    sudo docker --version
+    sudo docker run hello-world
+    ```
 
 #### docker-compose
 
-```console
-sudo docker-compose --version
-```
+1. [Install docker-compose](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-compose.md)
+1. Test
+
+    ```console
+    sudo docker-compose --version
+    ```
 
 ## Using docker-compose
 
@@ -98,6 +115,8 @@ sudo docker-compose --version
     sudo docker build --tag senzing/mysql-init          https://github.com/senzing/docker-mysql-init.git
     sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
     ```
+
+1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
 
 ### Configuration
 
