@@ -14,7 +14,7 @@ This docker formation brings up the following docker containers:
 1. *[phpmyadmin/phpmyadmin](https://github.com/phpmyadmin/docker)*
 1. *[senzing/mock-data-generator](https://github.com/Senzing/mock-data-generator)*
 1. *[senzing/mysql-init](https://github.com/Senzing/docker-mysql-init)*
-1. *[senzing/python-base](https://github.com/Senzing/docker-python-base)*
+1. *[senzing/python-mysql-base](https://github.com/Senzing/docker-python-mysql-base)*
 1. *[senzing/stream-loader](https://github.com/Senzing/stream-loader)*
 1. *[senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server)*
 
@@ -25,7 +25,6 @@ This docker formation brings up the following docker containers:
     1. [Time](#time)
     1. [Background knowledge](#background-knowledge)
 1. [Preparation](#preparation)
-    1. [Set environment variables](#set-environment-variables)
     1. [Clone repository](#clone-repository)
     1. [Create SENZING_DIR](#create-senzing_dir)
     1. [Prerequisite software](#prerequisite-software)
@@ -44,7 +43,7 @@ This repository and demonstration require 7 GB free disk space.
 
 ### Time
 
-Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+Budget 2 hours to get the demonstration up-and-running, depending on CPU and network speeds.
 
 ### Background knowledge
 
@@ -55,32 +54,22 @@ This repository assumes a working knowledge of:
 
 ## Preparation
 
-### Set environment variables
+### Clone repository
 
-1. These variables may be modified, but do not need to be modified.
-   The variables are used throughout the installation procedure.
+1. Set these environment variable values:
 
     ```console
     export GIT_ACCOUNT=senzing
     export GIT_REPOSITORY=docker-compose-stream-loader-kafka-demo
     ```
 
-1. Synthesize environment variables.
+   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+
+1. After the repository has been cloned, be sure the following are set:
 
     ```console
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    export GIT_REPOSITORY_URL="https://github.com/${GIT_ACCOUNT}/${GIT_REPOSITORY}.git"
-    ```
-
-### Clone repository
-
-1. Get repository.
-
-    ```console
-    mkdir --parents ${GIT_ACCOUNT_DIR}
-    cd  ${GIT_ACCOUNT_DIR}
-    git clone ${GIT_REPOSITORY_URL}
     ```
 
 ### Create SENZING_DIR
@@ -118,10 +107,19 @@ The following software programs need to be installed.
 1. Build docker images.
 
     ```console
-    sudo docker build --tag senzing/python-base         https://github.com/senzing/docker-python-base.git
+    export BASE_IMAGE=senzing/python-mysql-base
+
+    sudo docker build \
+      --tag ${BASE_IMAGE} \
+      https://github.com/senzing/docker-python-mysql-base.git
+
+    sudo docker build \
+      --tag senzing/stream-loader \
+      --build-arg BASE_IMAGE=${BASE_IMAGE} \
+      https://github.com/senzing/stream-loader.git
+
     sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
     sudo docker build --tag senzing/mysql-init          https://github.com/senzing/docker-mysql-init.git
-    sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
     ```
 
 1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
@@ -159,7 +157,7 @@ The following software programs need to be installed.
     export MYSQL_PASSWORD=g2
     export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo
 
-    sudo docker-compose --file docker-compose-init.yaml up
+    sudo docker-compose --file docker-compose-mysql-init.yaml up
     ```
 
 1. Once docker formation is up, phpMyAdmin will be available at
@@ -179,7 +177,7 @@ The following software programs need to be installed.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker-compose --file docker-compose-init.yaml down
+    sudo docker-compose --file docker-compose-mysql-init.yaml down
     ```
 
 ### Run docker formation to read from Kafka
@@ -197,7 +195,7 @@ The following software programs need to be installed.
     export MYSQL_PASSWORD=g2
     export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo
 
-    sudo docker-compose --file docker-compose-kafka.yaml up
+    sudo docker-compose --file docker-compose-mysql-kafka.yaml up
     ```
 
 1. Once docker formation is up, phpMyAdmin will be available at
@@ -238,7 +236,7 @@ In a separate (or reusable) terminal window:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker-compose --file docker-compose-kafka.yaml down
+    sudo docker-compose --file docker-compose-mysql-kafka.yaml down
     ```
 
 1. Delete database storage.

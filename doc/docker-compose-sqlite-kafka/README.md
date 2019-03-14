@@ -1,4 +1,4 @@
-# docker-compose-kafka-sqlite
+# docker-compose-sqlite-kafka
 
 ## Overview
 
@@ -101,7 +101,7 @@ sudo docker-compose --version
     cd ${GIT_REPOSITORY_DIR}
 
     export SENZING_DIR=/opt/senzing
-    sudo docker-compose --file docker-compose-kafka-sqlite.yaml up
+    sudo docker-compose --file docker-compose-sqlite-kafka.yaml up
     ```
 
 1. Wait for the following message in the log.
@@ -138,7 +138,7 @@ In a separate (or reusable) terminal window:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker-compose --file docker-compose-kafka-sqlite.yaml down
+    sudo docker-compose --file docker-compose-sqlite-kafka.yaml down
     ```
 
 1. Delete SENZING_DIR.
