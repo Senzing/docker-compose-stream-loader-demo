@@ -30,6 +30,7 @@ This docker formation brings up the following docker containers:
     1. [Build docker images](#build-docker-images)
     1. [Configuration](#configuration)
     1. [Run docker formation to read from Kafka](#run-docker-formation-to-read-from-kafka)
+    1. [View database](#view-database)
     1. [Test Docker container](#test-docker-container)
 1. [Cleanup](#cleanup)
 
@@ -142,6 +143,10 @@ The following software programs need to be installed.
 
     sudo docker-compose --file docker-compose-sqlite-kafka.yaml up
     ```
+
+### View database
+
+1. The database is viewable via [localhost:8080](http://localhost:8080).
 
 ### Test Docker container
 
