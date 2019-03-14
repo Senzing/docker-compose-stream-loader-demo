@@ -10,41 +10,64 @@ This docker formation brings up the following docker containers:
 
 1. *[bitnami/zookeeper](https://github.com/bitnami/bitnami-docker-zookeeper)*
 1. *[bitnami/kafka](https://github.com/bitnami/bitnami-docker-kafka)*
+1. *[coleifer/sqlite-web](https://github.com/coleifer/sqlite-web)*
 1. *[senzing/mock-data-generator](https://github.com/Senzing/mock-data-generator)*
-1. *[senzing/python-base](https://github.com/Senzing/docker-python-base)*
+1. *[senzing/python-postgresql-base](https://github.com/Senzing/docker-python-postgresql-base)*
 1. *[senzing/stream-loader](https://github.com/Senzing/stream-loader)*
-1. *[senzing/rest-api-server-java](https://github.com/Senzing/rest-api-server-java)*
+1. *[senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server)*
 
 ### Contents
 
+1. [Expectations](#expectations)
+    1. [Space](#space)
+    1. [Time](#time)
+    1. [Background knowledge](#background-knowledge)
+1. [Preparation](#preparation)
+    1. [Clone repository](#clone-repository)
+    1. [Create SENZING_DIR](#create-senzing_dir)
+    1. [Prerequisite software](#prerequisite-software)
+1. [Using docker-compose](#using-docker-compose)
+    1. [Build docker images](#build-docker-images)
+    1. [Configuration](#configuration)
+    1. [Run docker formation to read from Kafka](#run-docker-formation-to-read-from-kafka)
+    1. [Test Docker container](#test-docker-container)
+1. [Cleanup](#cleanup)
+
+## Expectations
+
+### Space
+
+This repository and demonstration require 7 GB free disk space.
+
+### Time
+
+Budget 2 hours to get the demonstration up-and-running, depending on CPU and network speeds.
+
+### Background knowledge
+
+This repository assumes a working knowledge of:
+
+1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+1. [Docker-compose](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker-compose.md)
+
 ## Preparation
 
-### Set environment variables
+### Clone repository
 
-1. These variables may be modified, but do not need to be modified.
-   The variables are used throughout the installation procedure.
+1. Set these environment variable values:
 
     ```console
     export GIT_ACCOUNT=senzing
     export GIT_REPOSITORY=docker-compose-stream-loader-kafka-demo
     ```
 
-1. Synthesize environment variables.
+   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+
+1. After the repository has been cloned, be sure the following are set:
 
     ```console
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    export GIT_REPOSITORY_URL="https://github.com/${GIT_ACCOUNT}/${GIT_REPOSITORY}.git"
-    ```
-
-### Clone repository
-
-1. Get repository.
-
-    ```console
-    mkdir --parents ${GIT_ACCOUNT_DIR}
-    cd  ${GIT_ACCOUNT_DIR}
-    git clone ${GIT_REPOSITORY_URL}
     ```
 
 ### Create SENZING_DIR
@@ -52,22 +75,28 @@ This docker formation brings up the following docker containers:
 If you do not already have an `/opt/senzing` directory on your local system, visit
 [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
-### Software
+### Prerequisite software
 
 The following software programs need to be installed.
 
 #### docker
 
-```console
-sudo docker --version
-sudo docker run hello-world
-```
+1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
+1. Test
+
+    ```console
+    sudo docker --version
+    sudo docker run hello-world
+    ```
 
 #### docker-compose
 
-```console
-sudo docker-compose --version
-```
+1. [Install docker-compose](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-compose.md)
+1. Test
+
+    ```console
+    sudo docker-compose --version
+    ```
 
 ## Using docker-compose
 
@@ -76,12 +105,21 @@ sudo docker-compose --version
 1. Build docker images.
 
     ```console
-    sudo docker build --tag senzing/python-base         https://github.com/senzing/docker-python-base.git
+    export BASE_IMAGE=senzing/python-postgresql-base
+
+    sudo docker build \
+      --tag ${BASE_IMAGE} \
+      https://github.com/senzing/docker-python-postgresql-base.git
+
+    sudo docker build \
+      --tag senzing/stream-loader \
+      --build-arg BASE_IMAGE=${BASE_IMAGE} \
+      https://github.com/senzing/stream-loader.git
+
     sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
-    sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
     ```
 
-1. Build [senzing/rest-api-server-java](https://github.com/Senzing/rest-api-server-java).
+1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
 
 ### Configuration
 
@@ -93,47 +131,46 @@ sudo docker-compose --version
   No default.
   Usually set to "/opt/senzing".
 
-### Run docker formation to initialize database
+### Run docker formation to read from Kafka
 
-1. Launch docker-compose formation.  Example:
+1. Launch docker-compose formation.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
     export SENZING_DIR=/opt/senzing
+
     sudo docker-compose --file docker-compose-sqlite-kafka.yaml up
     ```
 
-1. Wait for the following message in the log.
+### Test Docker container
+
+1. Wait for the following message in the terminal showing docker log.
 
     ```console
-    Started Senzing REST API Server on port 8080.
-
-    Server running at:
-
-    http://0.0.0.0/0.0.0.0:8080/
+    senzing-api-server | Started Senzing REST API Server on port 8080.
+    senzing-api-server |
+    senzing-api-server | Server running at:
+    senzing-api-server | http://0.0.0.0:8080/
     ```
 
-1. Test Senzing REST API server.  *Note:* port 8888 on the localhost has been mapped to port 8080 in the docker-compose file. Example:
+1. Test Senzing REST API server.
+   *Note:* port 8889 on the localhost has been mapped to port 8080 in the docker container.
+   See `WEBAPP_PORT` definition.
+   Example:
 
     ```console
-    export SENZING_API_SERVICE=http://localhost:8888
+    export SENZING_API_SERVICE=http://localhost:8889
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
     curl -X GET ${SENZING_API_SERVICE}/license
-    curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
-
-### Run docker container alone
-
-1. To run [senzing/rest-api-server-java](https://github.com/Senzing/rest-api-server-java) without docker-compose,
-   see [Run docker image](https://github.com/Senzing/rest-api-server-java#run-docker-image).
 
 ## Cleanup
 
 In a separate (or reusable) terminal window:
 
-1. Use environment variable describe in "[Set environment variables](#set-environment-variables)" and "[Configuration](#configuration)".
+1. Use environment variable describe in "[Clone repository](#clone-repository)" and "[Configuration](#configuration)".
 1. Run `docker-compose` command.
 
     ```console

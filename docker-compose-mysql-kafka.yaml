@@ -100,7 +100,7 @@ services:
   loader1:
     image: senzing/stream-loader
     container_name: senzing-stream-loader-1
-     depends_on:
+    depends_on:
       - mysqlinit
     environment:
       LC_CTYPE: en_US.utf8
