@@ -1,10 +1,10 @@
-# docker-compose-stream-loader-kafka-demo
+# docker-compose-stream-loader-kafka-mysql
 
 ## Overview
 
 The following diagram shows the relationship of the docker containers in this docker composition.
 
-![Image of architecture](docs/img-architecture/architecture.png)
+![Image of architecture](architecture.png)
 
 This docker formation brings up the following docker containers:
 
@@ -231,7 +231,7 @@ The following software programs need to be installed.
 
 In a separate (or reusable) terminal window:
 
-1. Use environment variable describe in "[Set environment variables](#set-environment-variables)" and "[Configuration](#configuration)".
+1. Use environment variable describe in "[Clone repository](#clone-repository)" and "[Configuration](#configuration)".
 1. Run `docker-compose` command.
 
     ```console
