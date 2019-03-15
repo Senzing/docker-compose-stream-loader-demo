@@ -16,6 +16,7 @@ services:
       - 3306:3306
     volumes:
       - /storage/docker/senzing/docker-compose-mysql-demo:/var/lib/mysql
+    restart: always
 
   mysqlinit:
     image: senzing/mysql-init
@@ -36,17 +37,6 @@ services:
       - mysql
     restart: on-failure
 
-  senzinginit:
-    image: senzing/python-base
-    container_name: senzing-python-init
-    environment:
-      SENZING_DATABASE_URL: "mysql://g2:g2@senzing-mysql:3306/G2"
-    networks:
-      - backend
-    volumes:
-      - /opt/senzing:/opt/senzing
-    restart: on-failure
-
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: senzing-phpmyadmin
@@ -57,9 +47,9 @@ services:
       - backend
     ports:
       - 8080:80
-    restart: always
     depends_on:
       - mysql
+    restart: always
 
 networks:
   backend:

@@ -51,7 +51,7 @@ services:
     depends_on:
       - mysql
 
-  app:
+  loader:
     image: senzing/stream-loader
     container_name: senzing-stream-loader
     environment:

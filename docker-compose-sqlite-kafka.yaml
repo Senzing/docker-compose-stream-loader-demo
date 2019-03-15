@@ -38,7 +38,7 @@ services:
       SENZING_KAFKA_BOOTSTRAP_SERVER: senzing-kafka:9092
       SENZING_KAFKA_TOPIC: "senzing-kafka-topic"
       SENZING_INPUT_URL: "https://s3.amazonaws.com/public-read-access/TestDataSets/loadtest-dataset-1M.json"
-      SENZING_RECORD_MAX: 9000
+      SENZING_RECORD_MAX: 10000
       SENZING_RECORD_MONITOR: 100
       SENZING_RECORDS_PER_SECOND: 10
     networks:
@@ -47,9 +47,22 @@ services:
       - kafka
     restart: on-failure
 
+  sqliteweb:
+    image: coleifer/sqlite-web
+    container_name: senzing-sqlite-web
+    environment:
+      SQLITE_DATABASE: G2C.db
+    networks:
+      - backend
+    ports:
+      - 8080:8080
+    volumes:
+      - ${SENZING_DIR:-/opt/senzing}/g2/sqldb:/data
+    restart: always
+
   loader:
     image: senzing/stream-loader
-    container_name: senzing-stream-loader-1
+    container_name: senzing-stream-loader
     environment:
 #     See https://github.com/Senzing/stream-loader#configuration
       SENZING_SUBCOMMAND: kafka
@@ -64,17 +77,16 @@ services:
       - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
     restart: on-failure
 
-  rest:
-    image: senzing/rest-api-server-java
-    container_name: senzing-rest-api-server
-    ports:
-      - '8888:8080'      
+  api:
+    image: senzing/senzing-api-server
+    container_name: senzing-api-server
     networks:
       - backend
+    ports:
+      - 8889:8080
+    restart: always
     volumes:
       - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
-    restart: always
-
 
 networks:
   backend:
