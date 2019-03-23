@@ -24,9 +24,9 @@ This docker formation brings up the following docker containers:
     1. [Time](#time)
     1. [Background knowledge](#background-knowledge)
 1. [Preparation](#preparation)
+    1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
     1. [Create SENZING_DIR](#create-senzing_dir)
-    1. [Prerequisite software](#prerequisite-software)
 1. [Using docker-compose](#using-docker-compose)
     1. [Build docker images](#build-docker-images)
     1. [Configuration](#configuration)
@@ -54,6 +54,13 @@ This repository assumes a working knowledge of:
 
 ## Preparation
 
+### Prerequisite software
+
+The following software programs need to be installed:
+
+1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
+1. [docker-compose](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-compose.md)
+
 ### Clone repository
 
 1. Set these environment variable values:
@@ -76,29 +83,6 @@ This repository assumes a working knowledge of:
 
 If you do not already have an `/opt/senzing` directory on your local system, visit
 [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
-
-### Prerequisite software
-
-The following software programs need to be installed.
-
-#### docker
-
-1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
-1. Test
-
-    ```console
-    sudo docker --version
-    sudo docker run hello-world
-    ```
-
-#### docker-compose
-
-1. [Install docker-compose](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-compose.md)
-1. Test
-
-    ```console
-    sudo docker-compose --version
-    ```
 
 ## Using docker-compose
 
