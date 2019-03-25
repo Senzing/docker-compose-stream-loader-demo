@@ -72,5 +72,24 @@ services:
       - mysqlinit
     restart: always
 
+  api:
+    image: senzing/senzing-api-server
+    container_name: senzing-api-server
+    command:
+      - -httpPort 8080
+      - -bindAddr all
+      - -iniFile /opt/senzing/g2/python/G2Module.ini
+    depends_on:
+      - mysql
+    environment:
+      SENZING_DATABASE_URL: "mysql://${MYSQL_USERNAME:-g2}:${MYSQL_PASSWORD:-g2}@senzing-mysql:3306/${MYSQL_DATABASE:-G2}"
+    networks:
+      - backend
+    ports:
+      - 8889:8080
+    restart: always
+    volumes:
+      - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
+
 networks:
   backend:

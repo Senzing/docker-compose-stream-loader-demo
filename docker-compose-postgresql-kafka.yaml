@@ -154,8 +154,14 @@ services:
   api:
     image: senzing/senzing-api-server
     container_name: senzing-api-server
+    command:
+      - -httpPort 8080
+      - -bindAddr all
+      - -iniFile /opt/senzing/g2/python/G2Module.ini
     depends_on:
       - postgres
+    environment:
+      SENZING_DATABASE_URL: "postgresql://${POSTGRES_USERNAME:-postgres}:${POSTGRES_PASSWORD:-postgres}@senzing-postgres:5432/${POSTGRES_DB:-G2}"
     networks:
       - backend
     ports:
