@@ -13,7 +13,7 @@ This docker formation brings up the following docker containers:
 1. *[postgres](https://hub.docker.com/_/postgres)*
 1. *[dockage/phppgadmin](https://hub.docker.com/r/dockage/phppgadmin)*
 1. *[senzing/mock-data-generator](https://github.com/Senzing/mock-data-generator)*
-1. *[senzing/python-postgresql-base](https://github.com/Senzing/docker-python-postgresql-base)*
+1. *[senzing/senzing-base](https://github.com/Senzing/docker-senzing-base)*
 1. *[senzing/stream-loader](https://github.com/Senzing/stream-loader)*
 1. *[senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server)*
 
@@ -88,20 +88,12 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Build docker images
 
+1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
+
 1. Build docker images.
 
     ```console
-    export BASE_IMAGE=senzing/python-postgresql-base
-
-    sudo docker build \
-      --tag ${BASE_IMAGE} \
-      https://github.com/senzing/docker-python-postgresql-base.git
-
-    sudo docker build \
-      --tag senzing/stream-loader \
-      --build-arg BASE_IMAGE=${BASE_IMAGE} \
-      https://github.com/senzing/stream-loader.git
-
+    sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
     sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
     ```
 
@@ -176,6 +168,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
     curl -X GET ${SENZING_API_SERVICE}/license
+    curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
 
 ## Cleanup

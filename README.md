@@ -8,6 +8,7 @@ The following diagram shows the relationship of the docker containers in this do
 
 Implementations of the docker formation:
 
-1. [Using mySQL database](docs/docker-compose-stream-loader-kafka-mysql/README.md)
-1. [Using SqLite database](docs/docker-compose-stream-loader-kafka-sqlite/README.md)
 1. [Using PostgreSQL database](docs/docker-compose-stream-loader-kafka-postgresql/README.md)
+1. [Using mySQL database](docs/docker-compose-stream-loader-kafka-mysql/README.md)
+1. [Using DB2 database](docs/docker-compose-stream-loader-kafka-db2/README.md)
+1. [Using SqLite database](docs/docker-compose-stream-loader-kafka-sqlite/README.md)
