@@ -4,34 +4,36 @@ services:
   zookeeper:
     image: 'bitnami/zookeeper:latest'
     container_name: senzing-zookeeper
-    ports:
-      - '2181:2181'
     environment:
 #     See https://github.com/bitnami/bitnami-docker-zookeeper#configuration
       ALLOW_ANONYMOUS_LOGIN: "yes"
-    restart: always
     networks:
       - backend
+    ports:
+      - '2181:2181'
+    restart: always
 
   kafka:
     image: 'bitnami/kafka:latest'
     container_name: senzing-kafka
-    ports:
-      - '9092:9092'
-    environment:
-#     See https://github.com/bitnami/bitnami-docker-kafka#configuration
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      ALLOW_PLAINTEXT_LISTENER: "yes"
-      KAFKA_NUM_PARTITIONS: 6
     depends_on:
       - zookeeper
-    restart: always
+    environment:
+#     See https://github.com/bitnami/bitnami-docker-kafka#configuration
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_NUM_PARTITIONS: 6
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     networks:
       - backend
+    ports:
+      - '9092:9092'
+    restart: always
 
   mockdata:
     image: senzing/mock-data-generator
     container_name: senzing-mock-data-generator
+    depends_on:
+      - kafka
     environment:
 #     See https://github.com/Senzing/docker-mock-data-generator#configuration
       SENZING_SUBCOMMAND: url-to-kafka
@@ -43,8 +45,6 @@ services:
       SENZING_RECORDS_PER_SECOND: 10
     networks:
       - backend
-    depends_on:
-      - kafka
     restart: on-failure
 
   sqliteweb:
