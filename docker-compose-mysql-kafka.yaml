@@ -64,25 +64,6 @@ services:
     volumes:
       - ${MYSQL_STORAGE:-/storage/docker/senzing/docker-compose-mysql-demo}:/var/lib/mysql
 
-  mysqlinit:
-    image: senzing/mysql-init
-    container_name: senzing-mysql-init
-    depends_on:
-      - mysql
-    environment:
-      SENZING_SENTINEL_FILE: ${SENZING_DIR:-/opt/senzing}/mysql-init.sentinel
-    command:
-      - --user=${MYSQL_USERNAME:-g2}
-      - --password=${MYSQL_PASSWORD:-g2}
-      - --host=mysql
-      - --database=${MYSQL_DATABASE:-G2}
-      - --execute="source ${SENZING_DIR:-/opt/senzing}/g2/data/g2core-schema-mysql-create.sql"
-    networks:
-      - backend
-    restart: on-failure
-    volumes:
-      - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
-
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: senzing-phpmyadmin
@@ -100,8 +81,6 @@ services:
   loader1:
     image: senzing/stream-loader
     container_name: senzing-stream-loader-1
-    depends_on:
-      - mysqlinit
     environment:
       LC_CTYPE: en_US.utf8
 #     See https://github.com/Senzing/stream-loader#configuration

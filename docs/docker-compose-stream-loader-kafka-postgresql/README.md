@@ -28,7 +28,6 @@ This docker formation brings up the following docker containers:
     1. [Clone repository](#clone-repository)
     1. [Create SENZING_DIR](#create-senzing_dir)
 1. [Using docker-compose](#using-docker-compose)
-    1. [Build docker images](#build-docker-images)
     1. [Configuration](#configuration)
     1. [Run docker formation to read from Kafka](#run-docker-formation-to-read-from-kafka)
     1. [Initialize database](#initialize-database)
@@ -86,19 +85,6 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ## Using docker-compose
 
-### Build docker images
-
-1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
-
-1. Build docker images.
-
-    ```console
-    sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
-    sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
-    ```
-
-1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
-
 ### Configuration
 
 - **SENZING_DIR** -
@@ -128,14 +114,13 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export SENZING_DIR=/opt/senzing
-
-    export POSTGRES_DB=G2
-    export POSTGRES_PASSWORD=postgres
-    export POSTGRES_USERNAME=postgres
-    export POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-postgres
-
-    sudo docker-compose --file docker-compose-postgresql-kafka.yaml up
+    sudo \
+      SENZING_DIR=/opt/senzing \
+      POSTGRES_DB=G2 \
+      POSTGRES_PASSWORD=postgres \
+      POSTGRES_USERNAME=postgres \
+      POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-postgres \
+      docker-compose --file docker-compose-postgresql-kafka.yaml up
     ```
 
 ### Initialize database
