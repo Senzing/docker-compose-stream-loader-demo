@@ -117,8 +117,6 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     sudo \
       SENZING_DIR=/opt/senzing \
       POSTGRES_DB=G2 \
-      POSTGRES_PASSWORD=postgres \
-      POSTGRES_USERNAME=postgres \
       POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-postgres \
       docker-compose --file docker-compose-postgresql-kafka.yaml up
     ```
