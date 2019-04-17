@@ -89,17 +89,11 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Build docker images
 
-1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
-
 1. Build docker images.
 
     ```console
-    sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
-    sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
     sudo docker build --tag senzing/mysql-init          https://github.com/senzing/docker-mysql-init.git
     ```
-
-1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
 
 ### Configuration
 
@@ -126,15 +120,12 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export SENZING_DIR=/opt/senzing
-
-    export MYSQL_DATABASE=G2
-    export MYSQL_ROOT_PASSWORD=root
-    export MYSQL_USERNAME=g2
-    export MYSQL_PASSWORD=g2
-    export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo
-
-    sudo docker-compose --file docker-compose-mysql-init.yaml up
+    sudo \
+      SENZING_DIR=/opt/senzing \
+      MYSQL_DATABASE=G2 \
+      MYSQL_ROOT_PASSWORD=root \
+      MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo \
+      docker-compose --file docker-compose-mysql-init.yaml up
     ```
 
 1. Once docker formation is up, phpMyAdmin will be available at
@@ -164,15 +155,12 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export SENZING_DIR=/opt/senzing
-
-    export MYSQL_DATABASE=G2
-    export MYSQL_ROOT_PASSWORD=root
-    export MYSQL_USERNAME=g2
-    export MYSQL_PASSWORD=g2
-    export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo
-
-    sudo docker-compose --file docker-compose-mysql-kafka.yaml up
+    sudo \
+      SENZING_DIR=/opt/senzing \
+      MYSQL_DATABASE=G2 \
+      MYSQL_ROOT_PASSWORD=root \
+      MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo \
+      docker-compose --file docker-compose-mysql-kafka.yaml up
     ```
 
 1. Once docker formation is up, phpMyAdmin will be available at
