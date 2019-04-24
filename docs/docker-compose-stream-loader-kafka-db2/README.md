@@ -145,10 +145,10 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
   Default: "G2"
 - **DB2_PASSWORD** -
   The password for the the database "root" user name.
-  Default: "db2inst"  
+  Default: "db2inst1"  
 - **DB2_USERNAME** -
   The username for the the database "root" user name.
-  Default: "db2inst2"  
+  Default: "db2inst1"  
 - **DB2_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-stream-loader-kafka-db2"
@@ -164,6 +164,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     export DB2_PASSWORD=db2inst1
     export DB2_USERNAME=db2inst1
     export DB2_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-db2	
+    export DB2INST1_PASSWORD=db2inst1
 	```
 
 1. Launch docker-compose formation.  Example:
@@ -177,6 +178,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
       DB2_PASSWORD=${DB2_PASSWORD} \
       DB2_USERNAME=${DB2_USERNAME} \
       DB2_STORAGE=${DB2_STORAGE} \
+      DB2INST1_PASSWORD=${DB2INST1_PASSWORD} \
       docker-compose --file docker-compose-db2-kafka.yaml up
     ```
 
