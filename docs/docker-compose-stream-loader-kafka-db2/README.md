@@ -2,6 +2,16 @@
 
 ## Overview
 
+This repository illustrates a reference implementation of Senzing using IBM DB2 as the underlying database.
+
+The instructions show how to set up a system that:
+
+1. Reads JSON lines from a file on the internet.
+1. Sends each JSON line as a message to a Kafka topic.
+1. Reads messages from the Kafka topic and inserts into Senzing.
+    1. In this implementation, Senzing keeps its data in an IBM Db2 database.
+1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
+
 The following diagram shows the relationship of the docker containers in this docker composition.
 
 ![Image of architecture](architecture.png)
@@ -83,21 +93,39 @@ The following software programs need to be installed:
 If you do not already have an `/opt/senzing` directory on your local system, visit
 [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
+### Db2 Client
+
+1. Visit [Download initial Version 11.1 clients and drivers](http://www-01.ibm.com/support/docview.wss?uid=swg21385217)
+    1. Click on "[IBM Data Server Driver for ODBC and CLI (CLI Driver)](http://www.ibm.com/services/forms/preLogin.do?source=swg-idsoc97)" link.
+    1. Select :radio_button:  "IBM Data Server Driver for ODBC and CLI (Linux AMD64 and Intel EM64T)"
+    1. Click "Continue" button.
+    1. Choose download method and click "Download now" button.
+    1. Download `ibm_data_server_driver_for_odbc_cli_linuxx64_v11.1.tar.gz` to `/opt/senzing/ibm_data_server_driver_for_odbc_cli_linuxx64_v11.1.tar.gz`.
+
+1. Uncompress `.tar.gz` file.  Example:
+
+    ```console
+    sudo mkdir -p /opt/senzing/db2
+
+    sudo tar \
+      --extract \
+      --owner=root \
+      --group=root \
+      --no-same-owner \
+      --no-same-permissions \
+      --directory=/opt/senzing/db2 \
+      --file=/opt/senzing/ibm_data_server_driver_for_odbc_cli_linuxx64_v11.1.tar.gz
+    ```
+
 ## Using docker-compose
 
 ### Build docker images
 
-1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
-
 1. Build docker images.
 
     ```console
-    sudo docker build --tag senzing/db2express-c        https://github.com/senzing/docker-db2express-c.git
-    sudo docker build --tag senzing/stream-loader       https://github.com/senzing/stream-loader.git
-    sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
+    sudo docker build --tag senzing/db2express-c  https://github.com/senzing/docker-db2express-c.git
     ```
-
-1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
 
 ### Configuration
 
@@ -113,29 +141,44 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
   Default: "G2"
 - **DB2_PASSWORD** -
   The password for the the database "root" user name.
-  Default: "db2inst"  
+  Default: "db2inst1"  
 - **DB2_USERNAME** -
   The username for the the database "root" user name.
-  Default: "db2inst2"  
+  Default: "db2inst1"  
 - **DB2_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-stream-loader-kafka-db2"
+- **DB2INST1_PASSWORD** -
+  The password for the "db2inst1" user name.
+  Default: "db2inst1"
 
 ### Run docker formation to read from Kafka
 
-1. Launch docker-compose formation.
+1. :pencil2: Set environment variables.  Example:
 
     ```console
-    cd ${GIT_REPOSITORY_DIR}
-
     export SENZING_DIR=/opt/senzing
 
     export DB2_DB=G2
     export DB2_PASSWORD=db2inst1
     export DB2_USERNAME=db2inst1
     export DB2_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-db2
+    export DB2INST1_PASSWORD=db2inst1
+    ```
 
-    sudo docker-compose --file docker-compose-db2-kafka.yaml up
+1. Launch docker-compose formation.  Example:
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+
+    sudo \
+      SENZING_DIR=${SENZING_DIR} \
+      DB2_DB=${DB2_DB} \
+      DB2_PASSWORD=${DB2_PASSWORD} \
+      DB2_USERNAME=${DB2_USERNAME} \
+      DB2_STORAGE=${DB2_STORAGE} \
+      DB2INST1_PASSWORD=${DB2INST1_PASSWORD} \
+      docker-compose --file docker-compose-db2-kafka.yaml up
     ```
 
 ### Initialize database
