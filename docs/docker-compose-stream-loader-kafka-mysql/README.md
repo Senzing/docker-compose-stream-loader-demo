@@ -119,8 +119,6 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 - **MYSQL_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-mysql-demo"
-- See [github.com/Senzing/docker-mysql](https://github.com/Senzing/docker-mysql)
-  for more details on how to find values for other **MYSQL_** environment variables.
 - **MYSQL_USERNAME** -
   Non-root MySQL user.
   Default: "g2"
@@ -131,6 +129,8 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
   See [Create SENZING_DIR](#create-senzing_dir).
   No default.
   Usually set to "/opt/senzing".
+- See [github.com/Senzing/docker-mysql](https://github.com/Senzing/docker-mysql)
+  for more details on how to find values for other **MYSQL_** environment variables.
 
 ### Run docker formation to read from Kafka
 
