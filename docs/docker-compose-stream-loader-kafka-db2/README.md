@@ -160,8 +160,8 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     export SENZING_DIR=/opt/senzing
 
     export DB2_DB=G2
-    export DB2_PASSWORD=my-password
-    export DB2_USERNAME=my-username
+    export DB2_PASSWORD=db2inst1
+    export DB2_USERNAME=db2inst1
     export DB2_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-db2
     export DB2INST1_PASSWORD=db2inst1
     ```
