@@ -107,13 +107,12 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Configuration
 
-- **SENZING_DIR** -
-  Path on the local system where
-  [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
-  has been extracted.
-  See [Create SENZING_DIR](#create-senzing_dir).
-  No default.
-  Usually set to "/opt/senzing".
+- **MYSQL_DATABASE** -
+  Database name.
+  Default: "G2"
+- **MYSQL_PASSWORD** -
+  Password for MYSQL_USERNAME.
+  Default: "g2"  
 - **MYSQL_ROOT_PASSWORD** -
   The password for the the database "root" user name.
   Default: "root"
@@ -122,8 +121,18 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
   Default: "/storage/docker/senzing/docker-compose-mysql-demo"
 - See [github.com/Senzing/docker-mysql](https://github.com/Senzing/docker-mysql)
   for more details on how to find values for other **MYSQL_** environment variables.
+- **MYSQL_USERNAME** -
+  Non-root MySQL user.
+  Default: "g2"
+- **SENZING_DIR** -
+  Path on the local system where
+  [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
+  has been extracted.
+  See [Create SENZING_DIR](#create-senzing_dir).
+  No default.
+  Usually set to "/opt/senzing".
 
-### Run docker formation to initialize database
+### Run docker formation to read from Kafka
 
 1. :pencil2: Set environment variables.  Example:
 
@@ -134,41 +143,6 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
       export MYSQL_ROOT_PASSWORD=root
       export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo
     ```
-
-1. Launch docker-compose formation.  Example:
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-
-    sudo \
-      SENZING_DIR=${SENZING_DIR} \
-      MYSQL_DATABASE=${MYSQL_DATABASE} \
-      MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} \
-      MYSQL_STORAGE=${MYSQL_STORAGE} \
-      docker-compose --file docker-compose-mysql-init.yaml up
-    ```
-
-1. Once docker formation is up, phpMyAdmin will be available at
-   [localhost:8080](http://localhost:8080).
-   You can log in with Username "root" and the Password specified in `MYSQL_ROOT_PASSWORD`.
-
-1. The database storage will persist on the local system at ${MYSQL_STORAGE}.
-   The default database storage path is `/storage/docker/senzing/docker-compose-stream-loader-kafka-demo`.
-
-1. When the following is seen in the log:
-
-    ```console
-    senzing-mysql-init exited with code 0
-    ```
-
-    the docker formation can be brought down.
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-    sudo docker-compose --file docker-compose-mysql-init.yaml down
-    ```
-
-### Run docker formation to read from Kafka
 
 1. Launch docker-compose formation.
 
