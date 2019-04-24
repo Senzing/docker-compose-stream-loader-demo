@@ -49,8 +49,7 @@ services:
 
   db2:
     image: senzing/db2express-c:latest
-#    command: db2start
-    command: "sleep 100000"
+    command: db2start
     container_name: senzing-db2
     environment:
       LICENSE: accept
