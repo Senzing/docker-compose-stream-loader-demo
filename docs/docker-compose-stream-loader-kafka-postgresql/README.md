@@ -2,6 +2,16 @@
 
 ## Overview
 
+This repository illustrates a reference implementation of Senzing using PostgreSQL as the underlying database.
+
+The instructions show how to set up a system that:
+
+1. Reads JSON lines from a file on the internet.
+1. Sends each JSON line as a message to a Kafka topic.
+1. Reads messages from the Kafka topic and inserts into Senzing.
+    1. In this implementation, Senzing keeps its data in a PostgreSQL database.
+1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
+
 The following diagram shows the relationship of the docker containers in this docker composition.
 
 ![Image of architecture](architecture.png)
@@ -109,15 +119,24 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Run docker formation to read from Kafka
 
-1. Launch docker-compose formation.
+1. :pencil2: Set environment variables.  Example:
+
+    ```console
+    export SENZING_DIR=/opt/senzing
+
+    export POSTGRES_DB=G2
+    export POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-postgres
+    ```
+
+1. Launch docker-compose formation.  Example:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
     sudo \
-      SENZING_DIR=/opt/senzing \
-      POSTGRES_DB=G2 \
-      POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-postgres \
+      SENZING_DIR=${SENZING_DIR} \
+      POSTGRES_DB=${POSTGRES_DB} \
+      POSTGRES_STORAGE=${POSTGRES_STORAGE} \
       docker-compose --file docker-compose-postgresql-kafka.yaml up
     ```
 
