@@ -128,8 +128,6 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     ```console
     sudo docker build --tag senzing/db2express-c  https://github.com/senzing/docker-db2express-c.git
     ```
-    
-1. Manually [senzing/senzing-package](https://github.com/Senzing/senzing-package) docker image.
 
 ### Configuration
 
