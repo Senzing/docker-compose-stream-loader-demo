@@ -149,7 +149,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-stream-loader-kafka-db2"
 - **DB2INST1_PASSWORD** -
-  The password for the database "db2inst1" user name.
+  The password for the "db2inst1" user name.
   Default: "db2inst1"
 
 ### Run docker formation to read from Kafka
