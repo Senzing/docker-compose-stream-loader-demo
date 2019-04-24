@@ -117,7 +117,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-stream-loader-kafka-postgres"
 
-### Run docker formation to read from Kafka
+### Run docker formation
 
 1. :pencil2: Set environment variables.  Example:
 

@@ -2,6 +2,16 @@
 
 ## Overview
 
+This repository illustrates a reference implementation of Senzing using MySQL as the underlying database.
+
+The instructions show how to set up a system that:
+
+1. Reads JSON lines from a file on the internet.
+1. Sends each JSON line as a message to a Kafka topic.
+1. Reads messages from the Kafka topic and inserts into Senzing.
+    1. In this implementation, Senzing keeps its data in a MySQL database.
+1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
+
 The following diagram shows the relationship of the docker containers in this docker composition.
 
 ![Image of architecture](architecture.png)
@@ -92,7 +102,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 1. Build docker images.
 
     ```console
-    sudo docker build --tag senzing/mysql-init          https://github.com/senzing/docker-mysql-init.git
+    sudo docker build --tag senzing/mysql-init   https://github.com/senzing/docker-mysql-init.git
     ```
 
 ### Configuration
@@ -115,16 +125,26 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Run docker formation to initialize database
 
+1. :pencil2: Set environment variables.  Example:
+
+    ```console
+      export SENZING_DIR=/opt/senzing
+
+      export MYSQL_DATABASE=G2
+      export MYSQL_ROOT_PASSWORD=root
+      export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo
+    ```
+
 1. Launch docker-compose formation.  Example:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
     sudo \
-      SENZING_DIR=/opt/senzing \
-      MYSQL_DATABASE=G2 \
-      MYSQL_ROOT_PASSWORD=root \
-      MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo \
+      SENZING_DIR=${SENZING_DIR} \
+      MYSQL_DATABASE=${MYSQL_DATABASE} \
+      MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} \
+      MYSQL_STORAGE=${MYSQL_STORAGE} \
       docker-compose --file docker-compose-mysql-init.yaml up
     ```
 
@@ -156,10 +176,10 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     cd ${GIT_REPOSITORY_DIR}
 
     sudo \
-      SENZING_DIR=/opt/senzing \
-      MYSQL_DATABASE=G2 \
-      MYSQL_ROOT_PASSWORD=root \
-      MYSQL_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-demo \
+      SENZING_DIR=${SENZING_DIR} \
+      MYSQL_DATABASE=${MYSQL_DATABASE} \
+      MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} \
+      MYSQL_STORAGE=${MYSQL_STORAGE} \
       docker-compose --file docker-compose-mysql-kafka.yaml up
     ```
 
