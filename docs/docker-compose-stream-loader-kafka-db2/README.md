@@ -101,7 +101,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     1. Click "Continue" button.
     1. Choose download method and click "Download now" button.
     1. Download `ibm_data_server_driver_for_odbc_cli_linuxx64_v11.1.tar.gz` to `/opt/senzing/ibm_data_server_driver_for_odbc_cli_linuxx64_v11.1.tar.gz`.
-    
+
 1. Uncompress `.tar.gz` file.  Example:
 
     ```console
@@ -148,20 +148,23 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 - **DB2_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-stream-loader-kafka-db2"
+- **DB2INST1_PASSWORD** -
+  The password for the database "db2inst1" user name.
+  Default: "db2inst1"
 
 ### Run docker formation to read from Kafka
 
 1. :pencil2: Set environment variables.  Example:
 
-	```console
+    ```console
     export SENZING_DIR=/opt/senzing
 
     export DB2_DB=G2
-    export DB2_PASSWORD=db2inst1
-    export DB2_USERNAME=db2inst1
-    export DB2_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-db2	
+    export DB2_PASSWORD=my-password
+    export DB2_USERNAME=my-username
+    export DB2_STORAGE=/storage/docker/senzing/docker-compose-stream-loader-kafka-db2
     export DB2INST1_PASSWORD=db2inst1
-	```
+    ```
 
 1. Launch docker-compose formation.  Example:
 
