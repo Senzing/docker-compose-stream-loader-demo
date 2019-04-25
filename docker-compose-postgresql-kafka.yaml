@@ -21,7 +21,7 @@ services:
     environment:
 #     See https://github.com/bitnami/bitnami-docker-kafka#configuration
       ALLOW_PLAINTEXT_LISTENER: "yes"
-      KAFKA_NUM_PARTITIONS: 6
+      KAFKA_NUM_PARTITIONS: 5
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     networks:
       - backend
@@ -96,45 +96,9 @@ services:
       - "8443:443"
     restart: always
 
-  loader1:
+  loader:
     image: senzing/stream-loader
-    container_name: senzing-stream-loader-1
-    environment:
-      LC_CTYPE: en_US.utf8
-#     See https://github.com/Senzing/stream-loader#configuration
-      SENZING_SUBCOMMAND: kafka
-      SENZING_DATA_SOURCE: PEOPLE
-      SENZING_DATABASE_URL: "postgresql://${POSTGRES_USERNAME:-postgres}:${POSTGRES_PASSWORD:-postgres}@senzing-postgres:5432/${POSTGRES_DB:-G2}"
-      SENZING_ENTITY_TYPE: PEOPLE
-      SENZING_KAFKA_BOOTSTRAP_SERVER: senzing-kafka:9092
-      SENZING_KAFKA_TOPIC: "senzing-kafka-topic"
-    networks:
-      - backend
-    restart: on-failure
-    volumes:
-      - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
-
-  loader2:
-    image: senzing/stream-loader
-    container_name: senzing-stream-loader-2
-    environment:
-      LC_CTYPE: en_US.utf8
-#     See https://github.com/Senzing/stream-loader#configuration
-      SENZING_SUBCOMMAND: kafka
-      SENZING_DATA_SOURCE: PEOPLE
-      SENZING_DATABASE_URL: "postgresql://${POSTGRES_USERNAME:-postgres}:${POSTGRES_PASSWORD:-postgres}@senzing-postgres:5432/${POSTGRES_DB:-G2}"
-      SENZING_ENTITY_TYPE: PEOPLE
-      SENZING_KAFKA_BOOTSTRAP_SERVER: senzing-kafka:9092
-      SENZING_KAFKA_TOPIC: "senzing-kafka-topic"
-    networks:
-      - backend
-    restart: on-failure
-    volumes:
-      - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
-
-  loader3:
-    image: senzing/stream-loader
-    container_name: senzing-stream-loader-3
+    container_name: senzing-stream-loader
     environment:
       LC_CTYPE: en_US.utf8
 #     See https://github.com/Senzing/stream-loader#configuration

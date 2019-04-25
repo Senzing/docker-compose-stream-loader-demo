@@ -2,6 +2,16 @@
 
 ## Overview
 
+This repository illustrates a reference implementation of Senzing using SQLite as the underlying database.
+
+The instructions show how to set up a system that:
+
+1. Reads JSON lines from a file on the internet.
+1. Sends each JSON line as a message to a Kafka topic.
+1. Reads messages from the Kafka topic and inserts into Senzing.
+    1. In this implementation, Senzing keeps its data in a SQLite database.
+1. Reads information from Senzing via [Senzing REST API](https://github.com/Senzing/senzing-rest-api) server.
+
 The following diagram shows the relationship of the docker containers in this docker composition.
 
 ![Image of architecture](architecture.png)
@@ -69,7 +79,7 @@ The following software programs need to be installed:
     export GIT_REPOSITORY=docker-compose-stream-loader-kafka-demo
     ```
 
-   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 1. After the repository has been cloned, be sure the following are set:
 
@@ -83,37 +93,7 @@ The following software programs need to be installed:
 If you do not already have an `/opt/senzing` directory on your local system, visit
 [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
-#### docker-compose
-
-1. [Install docker-compose](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-compose.md)
-1. Test
-
-    ```console
-    sudo docker-compose --version
-    ```
-
 ## Using docker-compose
-
-### Build docker images
-
-1. Build docker images.
-
-    ```console
-    export BASE_IMAGE=senzing/python-postgresql-base
-
-    sudo docker build \
-      --tag ${BASE_IMAGE} \
-      https://github.com/senzing/docker-python-postgresql-base.git
-
-    sudo docker build \
-      --tag senzing/stream-loader \
-      --build-arg BASE_IMAGE=${BASE_IMAGE} \
-      https://github.com/senzing/stream-loader.git
-
-    sudo docker build --tag senzing/mock-data-generator https://github.com/senzing/mock-data-generator.git
-    ```
-
-1. Build [senzing/senzing-api-server](https://github.com/Senzing/senzing-api-server#using-docker) docker image.
 
 ### Configuration
 
@@ -127,12 +107,16 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Run docker formation to read from Kafka
 
-1. Launch docker-compose formation.
+1. :pencil2: Set environment variables.  Example:
+
+    ```console
+    export SENZING_DIR=/opt/senzing
+    ```
+
+1. Launch docker-compose formation.  Example:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-
-    export SENZING_DIR=/opt/senzing
 
     sudo docker-compose --file docker-compose-sqlite-kafka.yaml up
     ```
@@ -162,6 +146,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
     curl -X GET ${SENZING_API_SERVICE}/heartbeat
     curl -X GET ${SENZING_API_SERVICE}/license
+    curl -X GET ${SENZING_API_SERVICE}/entities/1
     ```
 
 ## Cleanup
