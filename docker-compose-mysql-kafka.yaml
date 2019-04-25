@@ -96,9 +96,9 @@ services:
       - 8080:80
     restart: always
 
-  loader1:
+  loader:
     image: senzing/stream-loader
-    container_name: senzing-stream-loader-1
+    container_name: senzing-stream-loader
     environment:
       LC_CTYPE: en_US.utf8
 #     See https://github.com/Senzing/stream-loader#configuration
