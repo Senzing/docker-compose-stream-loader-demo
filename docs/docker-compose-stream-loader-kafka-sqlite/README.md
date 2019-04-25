@@ -79,7 +79,7 @@ The following software programs need to be installed:
     export GIT_REPOSITORY=docker-compose-stream-loader-kafka-demo
     ```
 
-   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 1. After the repository has been cloned, be sure the following are set:
 
@@ -107,12 +107,16 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Run docker formation to read from Kafka
 
-1. Launch docker-compose formation.
+1. :pencil2: Set environment variables.  Example:
+
+    ```console
+    export SENZING_DIR=/opt/senzing
+    ```
+
+1. Launch docker-compose formation.  Example:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-
-    export SENZING_DIR=/opt/senzing
 
     sudo docker-compose --file docker-compose-sqlite-kafka.yaml up
     ```
