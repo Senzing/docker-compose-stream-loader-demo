@@ -1,3 +1,10 @@
+# Deprecated
+
+This repository is deprecated and has been replaced by
+[docker-compose-demo](https://github.com/Senzing/docker-compose-demo)
+
+The repository will be deleted after July 31, 2019.
+
 # docker-compose-stream-loader-kafka-mysql
 
 ## Overview
@@ -112,7 +119,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
   Default: "G2"
 - **MYSQL_PASSWORD** -
   Password for MYSQL_USERNAME.
-  Default: "g2"  
+  Default: "g2"
 - **MYSQL_ROOT_PASSWORD** -
   The password for the the database "root" user name.
   Default: "root"

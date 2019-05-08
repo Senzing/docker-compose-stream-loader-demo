@@ -1,3 +1,10 @@
+# Deprecated
+
+This repository is deprecated and has been replaced by
+[docker-compose-demo](https://github.com/Senzing/docker-compose-demo)
+
+The repository will be deleted after July 31, 2019.
+
 # docker-compose-stream-loader-kafka-postgresql
 
 ## Overview
@@ -109,10 +116,10 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
   Default: "G2"
 - **POSTGRES_PASSWORD** -
   The password for the the database "root" user name.
-  Default: "postgres"  
+  Default: "postgres"
 - **POSTGRES_USERNAME** -
   The username for the the database "root" user name.
-  Default: "postgres"  
+  Default: "postgres"
 - **POSTGRES_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-stream-loader-kafka-postgres"
