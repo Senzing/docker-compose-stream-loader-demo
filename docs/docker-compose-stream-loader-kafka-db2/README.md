@@ -1,3 +1,10 @@
+# Deprecated
+
+This repository is deprecated and has been replaced by
+[docker-compose-demo](https://github.com/Senzing/docker-compose-demo)
+
+The repository will be deleted after July 31, 2019.
+
 # docker-compose-stream-loader-kafka-db2
 
 ## Overview
@@ -129,26 +136,26 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Configuration
 
-- **SENZING_DIR** -
+* **SENZING_DIR** -
   Path on the local system where
   [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
   has been extracted.
   See [Create SENZING_DIR](#create-senzing_dir).
   No default.
   Usually set to "/opt/senzing".
-- **DB2_DB** -
+* **DB2_DB** -
   The database schema name.
   Default: "G2"
-- **DB2_PASSWORD** -
+* **DB2_PASSWORD** -
   The password for the the database "root" user name.
-  Default: "db2inst1"  
-- **DB2_USERNAME** -
+  Default: "db2inst1"
+* **DB2_USERNAME** -
   The username for the the database "root" user name.
-  Default: "db2inst1"  
-- **DB2_STORAGE** -
+  Default: "db2inst1"
+* **DB2_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-stream-loader-kafka-db2"
-- **DB2INST1_PASSWORD** -
+* **DB2INST1_PASSWORD** -
   The password for the "db2inst1" user name.
   Default: "db2inst1"
 
