@@ -1,11 +1,11 @@
-# Deprecated
+# docker-compose-stream-loader-kafka-demo
+
+## :no_entry: Deprecated
 
 This repository is deprecated and has been replaced by
 [docker-compose-demo](https://github.com/Senzing/docker-compose-demo)
 
-The repository will be deleted after July 31, 2019.
-
-# docker-compose-stream-loader-kafka-demo
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 ## Overview
 
